@@ -44,8 +44,19 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+
+    # local
     'accounts.apps.AccountsConfig',
     'frontend.apps.FrontendConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
