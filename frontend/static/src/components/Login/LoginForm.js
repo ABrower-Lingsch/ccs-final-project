@@ -2,6 +2,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate, Link } from "react-router-dom"
 
 function LoginForm(props) {
   const [state, setState] = useState({
@@ -16,6 +17,8 @@ function LoginForm(props) {
       [name]: value,
     }));
   };
+
+  const navigate = useNavigate()
 
   const handleError = (err) => {
     console.warn(err);
@@ -78,7 +81,8 @@ function LoginForm(props) {
         <Button className="submit" variant="primary" type="submit">
           Login
         </Button>
-        
+        <p>or <Link to={"/register"}>Register</Link></p>
+
       </Form>
     </div>
   );
