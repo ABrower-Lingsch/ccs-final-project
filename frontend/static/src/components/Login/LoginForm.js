@@ -2,9 +2,9 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom";
 
-function LoginForm(props) {
+function LoginForm({ userState, setUserState }) {
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -18,7 +18,7 @@ function LoginForm(props) {
     }));
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleError = (err) => {
     console.warn(err);
@@ -26,8 +26,6 @@ function LoginForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    props.setUser(state.username);
-    console.log(state.username);
     const options = {
       method: "POST",
       headers: {
@@ -44,9 +42,14 @@ function LoginForm(props) {
       throw new Error("Network response was not OK");
     } else {
       const data = await response.json();
-      console.log(data);
       Cookies.set("Authorization", `Token ${data.key}`);
-      props.setAuth(true);
+      setUserState({
+        ...userState,
+        auth: true,
+        admin: data.is_superuser,
+        userID: data.id,
+      });
+      navigate("/");
     }
   };
 
@@ -81,8 +84,9 @@ function LoginForm(props) {
         <Button className="submit" variant="primary" type="submit">
           Login
         </Button>
-        <p>or <Link to={"/register"}>Register</Link></p>
-
+        <p>
+          or <Link to={"/register"}>Register</Link>
+        </p>
       </Form>
     </div>
   );

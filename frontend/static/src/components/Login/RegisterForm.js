@@ -2,13 +2,17 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
-function RegisterForm(props) {
+function RegisterForm({ userState, setUserState }) {
   const [userReg, setUserReg] = useState({
     username: "",
     password1: "",
     password2: "",
   });
+
+  const [userType, setUserType] = useState();
+  const navigate = useNavigate();
 
   const checkEqualPass = (e) => {
     e.preventDefault();
@@ -51,7 +55,17 @@ function RegisterForm(props) {
     } else {
       const data = await response.json();
       Cookies.set("Authorization", `Token ${data.key}`);
-      props.setAuth(true);
+      setUserState({
+        ...userState,
+        auth: true,
+        admin: data.is_superuser,
+        userID: data.id,
+      });
+      if (userType === "stylist") {
+        navigate("create-stylist-profile");
+      } else if (userType === "client") {
+        navigate("create-client-profile");
+      }
     }
   };
 
@@ -94,8 +108,26 @@ function RegisterForm(props) {
             name="password2"
           />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Check type="switch" label="I'm a Stylist" />
+        <p>Would you like to register as a Stylist or a Client?</p>
+        <Form.Group className="mb-3" controlId="is-stylist">
+          <Form.Check
+            required
+            type="radio"
+            name="user-type"
+            value="stylist"
+            label="Stylist"
+            onChange={(e) => setUserType(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="is-client">
+          <Form.Check
+            required
+            type="radio"
+            name="user-type"
+            value="client"
+            label="Client"
+            onChange={(e) => setUserType(e.target.value)}
+          />
         </Form.Group>
         <Button className="submit" variant="primary" type="submit">
           Register

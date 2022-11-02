@@ -1,10 +1,10 @@
 import NavBar from "../NavBar/Nav";
 import { Outlet } from "react-router-dom";
 
-function Format({ superState, logoutUser }) {
+function Format({ userState, logoutUser }) {
     return(
         <>
-            <NavBar superState={superState} logoutUser={logoutUser}></NavBar>
+            <NavBar userState={userState} logoutUser={logoutUser}></NavBar>
             <Outlet></Outlet>
         </>
     )

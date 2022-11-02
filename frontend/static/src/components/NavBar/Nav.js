@@ -1,13 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function NavBar({ superState, logoutUser }) {
+function NavBar({ userState, logoutUser }) {
   const navigate = useNavigate();
 
   const logout = (e) => {
-    logoutUser();
+    logoutUser(e);
     navigate("/");
   };
 
@@ -24,14 +24,16 @@ function NavBar({ superState, logoutUser }) {
             </Navbar.Brand>
           </div>
           <Nav className="links">
-            {!superState.auth && (
+            {!userState.auth && (
               <>
-                <Nav.Link href="/login"></Nav.Link>
+                <Nav.Link href="/login">Login</Nav.Link>
               </>
             )}
-            {superState.auth && (
+            {userState.auth && (
               <>
-                <Nav.Link href="/" onClick={(e) => logout(e)}></Nav.Link>
+                <Nav.Link href="/" onClick={(e) => logout(e)}>
+                  Logout
+                </Nav.Link>
               </>
             )}
           </Nav>
