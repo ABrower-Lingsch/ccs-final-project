@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./components/MainPage/MainPage";
 import LoginForm from "./components/Login/LoginForm";
 import RegisterForm from "./components/Login/RegisterForm";
+import CreateClientProfile from "./components/Profile/ClientCreate";
+import CreateStylistProfile from "./components/Profile/StylistCreate";
 
 const INITIAL_STATE = {
   auth: false,
@@ -69,17 +71,38 @@ function App() {
             element={<Format userState={userState} logoutUser={logoutUser} />}
           >
             <Route
-            path="login"
-            element={
-              <LoginForm userState={userState} setUserState={setUserState} />
-            }
-          />
-          <Route
-            path="register"
-            element={
-              <RegisterForm userState={userState} setUserState={setUserState} />
-            }
-          />
+              path="login"
+              element={
+                <LoginForm userState={userState} setUserState={setUserState} />
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <RegisterForm
+                  userState={userState}
+                  setUserState={setUserState}
+                />
+              }
+            />
+            <Route
+              path="create-client-profile"
+              element={
+                <CreateClientProfile
+                  userState={userState}
+                  setUserState={setUserState}
+                />
+              }
+            />
+            <Route
+              path="create-stylist-profile"
+              element={
+                <CreateStylistProfile
+                  userState={userState}
+                  setUserState={setUserState}
+                />
+              }
+            />
             <Route index element={<MainPage />} />
           </Route>
         </Routes>
