@@ -14,7 +14,8 @@ class User(AbstractUser):
 class ClientProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True)
-    avatar = models.ImageField(upload_to='profiles/', null=True)
+    avatar = models.ImageField(
+        default='default.jpg', upload_to='profiles/', null=True)
     first_name = models.CharField(max_length=225, null=True)
     last_name = models.CharField(max_length=225, null=True)
 

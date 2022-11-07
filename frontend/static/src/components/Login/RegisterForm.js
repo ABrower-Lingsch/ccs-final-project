@@ -62,9 +62,9 @@ function RegisterForm({ userState, setUserState }) {
         userID: data.id,
       });
       if (userType === "stylist") {
-        navigate("create-stylist-profile");
+        navigate("/create-stylist-profile");
       } else if (userType === "client") {
-        navigate("create-client-profile");
+        navigate("/create-client-profile");
       }
     }
   };
