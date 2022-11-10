@@ -43,8 +43,10 @@ function LoginForm({ userState, setUserState }) {
     } else {
       const data = await response.json();
       Cookies.set("Authorization", `Token ${data.key}`);
+      console.log({ data });
       setUserState({
         ...userState,
+        ...data,
         auth: true,
         admin: data.is_superuser,
         userID: data.id,

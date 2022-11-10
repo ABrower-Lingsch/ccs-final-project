@@ -192,3 +192,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#std:setting-SITE_ID
 
 SITE_ID = 1
+
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'accounts.serializers.TokenSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter',

@@ -1,28 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import defaultImage from "../../Images/default2.jpg";
-import Button from "react-bootstrap/Button";
+import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
+import Cookies from "js-cookie";
+import { AiFillInstagram } from "react-icons/ai";
+import { BsFacebook } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-const INITIAL_STYLIST_STATE = {
-  avatar: null,
-  first_name: "",
-  last_name: "",
-  license: "",
-  contact: "",
-  business: "",
-  location: "",
-  specialties: "",
-  bio: "",
-  email: "",
-  instagram: "",
-  facebook: "",
-};
+function StylistEdit({ userState, setUserState, profilePage, setProfilePage }) {
+  const [state, setState] = useState(profilePage);
+  const [isEdit, setIsEdit] = useState(false);
+  const [preview, setPreview] = useState(state.avatar);
 
-function CreateStylistProfile({ userState, setUserState }) {
-  const [state, setState] = useState(INITIAL_STYLIST_STATE);
-  const [preview, setPreview] = useState(defaultImage);
   const navigate = useNavigate();
 
   const handleError = (err) => {
@@ -56,55 +44,93 @@ function CreateStylistProfile({ userState, setUserState }) {
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append("avatar", state.avatar);
-    formData.append("first_name", state.first_name);
-    formData.append("last_name", state.last_name);
-    formData.append("license", state.license);
-    formData.append("contact", state.contact);
-    formData.append("business", state.business);
-    formData.append("location", state.location);
-    formData.append("specialties", state.specialties);
-    formData.append("bio", state.bio);
-    formData.append("email", state.email);
-    formData.append("instagram", state.instagram);
-    formData.append("facebook", state.facebook);
+    const user = { ...state };
+
+    for (const key in user) {
+      if (user[key]) {
+        formData.append(key, user[key]);
+      }
+    }
 
     const options = {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
       body: formData,
     };
-    const response = await fetch("/api_v1/profiles/stylists/", options).catch(
-      handleError
-    );
+
+    const response = await fetch(
+      `/api_v1/profiles/stylists/${state.id}/`,
+      options
+    ).catch(handleError);
     if (!response.ok) {
-      throw new Error("Network response was not OK");
+      throw new Error("Network response was not OK!");
     } else {
       const data = await response.json();
-      setState(INITIAL_STYLIST_STATE);
+      setUserState({
+        ...userState,
+        stylist_avatar: data.avatar,
+      });
+      setIsEdit(false);
       navigate("/stylist/profile-page");
     }
   };
 
-  return (
+  const previewHTML = (
+    <>
+      <section>
+        <div className="profile-container">
+          <img
+            className="create-profile-img"
+            src={state.avatar}
+            alt="profile picture"
+          />
+        </div>
+      </section>
+      <section>
+        <h1>
+          {state.first_name} {state.last_name}
+        </h1>
+        <div>{state.business}</div>
+        <div>{state.location}</div>
+        <div>{state.contact}</div>
+        <div>{state.email}</div>
+        <ul>
+          <li>
+            <a href={state.instagram}>
+              <AiFillInstagram />
+            </a>
+          </li>
+          <li>
+            <a href={state.facebook}>
+              <BsFacebook />
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Specialties:</h2>
+        <div>{state.specialties}</div>
+        <h3>About {state.first_name}</h3>
+        <div>{state.bio}</div>
+      </section>
+      <Button type="button" onClick={() => setIsEdit(true)}></Button>
+    </>
+  );
+
+  const editHTML = (
     <>
       <Form onSubmit={handleSubmit}>
         <section>
-          <h1>Create your profile</h1>
+          <h1>Edit your profile</h1>
           <div className="profile-container">
             <img className="create-profile-img" src={preview} alt="" />
           </div>
         </section>
         <Form.Group className="mb-3" controlId="image">
           <Form.Label>Add a profile picture</Form.Label>
-          <Form.Control
-            required
-            type="file"
-            name="avatar"
-            onChange={handleImage}
-          />
+          <Form.Control type="file" name="avatar" onChange={handleImage} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="first-name">
           <Form.Label>First Name</Form.Label>
@@ -218,12 +244,18 @@ function CreateStylistProfile({ userState, setUserState }) {
             onChange={handleInput}
           />
         </Form.Group>
-        <Button className="form-button" type="submit">
+        <Button
+          className="form-button"
+          type="submit"
+          onClick={() => setIsEdit(false)}
+        >
           Save Profile
         </Button>
       </Form>
     </>
   );
+
+  return <>{isEdit ? editHTML : previewHTML}</>;
 }
 
-export default CreateStylistProfile;
+export default StylistEdit;

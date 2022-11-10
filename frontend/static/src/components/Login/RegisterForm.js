@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -9,10 +9,28 @@ function RegisterForm({ userState, setUserState }) {
     username: "",
     password1: "",
     password2: "",
+    is_stylist: false,
+    is_client: false,
   });
 
   const [userType, setUserType] = useState();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userType === "stylist") {
+      setUserReg({
+        ...userReg,
+        is_stylist: true,
+        is_client: false,
+      });
+    } else if (userType === "client") {
+      setUserReg({
+        ...userReg,
+        is_stylist: false,
+        is_client: true,
+      });
+    }
+  }, [userType]);
 
   const checkEqualPass = (e) => {
     e.preventDefault();
@@ -60,6 +78,11 @@ function RegisterForm({ userState, setUserState }) {
         auth: true,
         admin: data.is_superuser,
         userID: data.id,
+        is_stylist: data.is_stylist,
+        is_client: data.is_client,
+        stylist_avatar: data.stylist_avatar,
+        client_avatar: data.client_avatar,
+        stylist_profile: data.stylist_profile,
       });
       if (userType === "stylist") {
         navigate("/create-stylist-profile");

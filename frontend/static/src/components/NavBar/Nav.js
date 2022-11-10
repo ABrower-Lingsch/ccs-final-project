@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function NavBar({ userState, logoutUser }) {
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ function NavBar({ userState, logoutUser }) {
       <Navbar className="nav">
         <Container>
           <div>
-            <Navbar.Brand href="#home" className="title">
-              HairHunter
+            <Navbar.Brand className="title">
+              <Nav.Link href="/">HairHunter</Nav.Link>
             </Navbar.Brand>
             <Navbar.Brand className="subtitle">
               Find the right stylist for you
@@ -31,6 +31,7 @@ function NavBar({ userState, logoutUser }) {
             )}
             {userState.auth && (
               <>
+                <Nav.Link href="/stylist/profile-page">Profile</Nav.Link>
                 <Nav.Link href="/" onClick={(e) => logout(e)}>
                   Logout
                 </Nav.Link>

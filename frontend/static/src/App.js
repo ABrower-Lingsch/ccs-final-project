@@ -8,11 +8,17 @@ import LoginForm from "./components/Login/LoginForm";
 import RegisterForm from "./components/Login/RegisterForm";
 import CreateClientProfile from "./components/Profile/ClientCreate";
 import CreateStylistProfile from "./components/Profile/StylistCreate";
+import StylistProfilePage from "./components/Profile/StylistProfilePage";
 
 const INITIAL_STATE = {
   auth: false,
   admin: false,
   userID: null,
+  is_stylist: false,
+  is_client: false,
+  stylist_avatar: null,
+  client_avatar: null,
+  stylist_profile: null,
 };
 
 function App() {
@@ -98,6 +104,15 @@ function App() {
               path="create-stylist-profile"
               element={
                 <CreateStylistProfile
+                  userState={userState}
+                  setUserState={setUserState}
+                />
+              }
+            />
+            <Route
+              path="stylist/profile-page"
+              element={
+                <StylistProfilePage
                   userState={userState}
                   setUserState={setUserState}
                 />

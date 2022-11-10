@@ -18,8 +18,7 @@ class TokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TokenModel
-        fields = ('key', 'is_superuser', 'id', 'client_avatar', 'stylist_avatar',
-                  'stylist_profile', 'stylist_avatar', 'client_avatar')
+        fields = '__all__'
 
 
 class CustomUserDetailsSerializer(UserDetailsSerializer):
@@ -34,8 +33,8 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def get_cleaned_data(self):
         data_dict = super().get_cleaned_data()
-        data_dict['is_stylist'] = self.validated_data.get('is_stylist', False)
-        data_dict['is_client'] = self.validated_data.get('is_client', False)
+        data_dict['is_student'] = self.validated_data.get('is_stylist', False)
+        data_dict['is_tutor'] = self.validated_data.get('is_client', False)
 
         return data_dict
 
