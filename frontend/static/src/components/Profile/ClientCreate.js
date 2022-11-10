@@ -89,7 +89,7 @@ function CreateClientProfile() {
                     <Form.Label>First Name</Form.Label>
                     <Form.Control type="text" name="first_name" placeholder="First Name" value={state.first_name} onChange={handleInput} required />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3" controlId="last-name">
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control type="text" name="last_name" placeholder="Last Name" value={state.last_name} onChange={handleInput} required />
                 </Form.Group>
