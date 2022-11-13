@@ -202,4 +202,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
 }
 
-ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter',
+# django-allauth custom user models
+# https://django-allauth.readthedocs.io/en/latest/advanced.html
+ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'

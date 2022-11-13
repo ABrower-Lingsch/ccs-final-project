@@ -20,7 +20,7 @@ function StylistProfilePage({ userState, setUserState }) {
       setProfilePage(data);
     };
     // console.log(userState);
-    console.log("here", userState.stylist_profile);
+    // console.log("here", userState.stylist_profile);
     getProfilePage(userState.stylist_profile);
   }, [userState, profilePage]);
 
