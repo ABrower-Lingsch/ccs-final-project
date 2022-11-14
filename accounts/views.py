@@ -1,7 +1,7 @@
 from operator import imod
 from rest_framework import generics
-from .models import StylistProfile, ClientProfile, User
-from .serializers import StylistProfileSerializer, ClientProfileSerializer, CustomUserDetailsSerializer
+from .models import StylistProfile, ClientProfile, User, Review
+from .serializers import StylistProfileSerializer, ClientProfileSerializer, CustomUserDetailsSerializer, ReviewSerializer
 from .permissions import IsUserOrReadOnly
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -43,6 +43,18 @@ class ClientProfileDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsUserOrReadOnly,)
     queryset = ClientProfile.objects.all()
     serializer_class = ClientProfileSerializer
+
+
+class StylistReviewsListAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsUserOrReadOnly,)
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        stylistprofile = self.kwargs['stylistprofile']
+        return Review.objects.filter(stylistprofile=stylistprofile)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 @api_view(['POST'])

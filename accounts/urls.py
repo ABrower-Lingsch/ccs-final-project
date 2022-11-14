@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ClientProfileDetailAPIView, ClientProfileListAPIView, StylistProfileDetailAPIView, StylistProfileListAPIView, UserListAPIView, verify_stylist
+from .views import ClientProfileDetailAPIView, ClientProfileListAPIView, StylistProfileDetailAPIView, StylistProfileListAPIView, UserListAPIView, verify_stylist, StylistReviewsListAPIView
 
 app_name = 'accounts'
 
@@ -13,4 +13,6 @@ urlpatterns = [
     path('profiles/clients/<int:pk>/',
          ClientProfileDetailAPIView.as_view(), name='client_profile'),
     path('profiles/stylists/<int:pk>/verify/', verify_stylist),
+    path('profiles/stylists/<int:stylistprofile>/reviews/',
+         StylistReviewsListAPIView.as_view()),
 ]

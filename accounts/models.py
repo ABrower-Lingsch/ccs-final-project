@@ -36,3 +36,13 @@ class StylistProfile(models.Model):
     email = models.EmailField(max_length=225, null=True)
     instagram = models.CharField(max_length=225, null=True, blank=True)
     facebook = models.CharField(max_length=225, null=True, blank=True)
+
+
+class Review(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, blank=True)
+    text = models.TextField(null=True)
+    stylistprofile = models.ForeignKey(
+        StylistProfile, on_delete=models.CASCADE, blank=True)
+    rating = models.IntegerField()
+    created_on = models.DateTimeField(auto_now_add=True, null=True)

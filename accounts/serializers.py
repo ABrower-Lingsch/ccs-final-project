@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StylistProfile, ClientProfile
+from .models import StylistProfile, ClientProfile, Review
 from dj_rest_auth.models import TokenModel
 from dj_rest_auth.serializers import UserDetailsSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
@@ -49,4 +49,14 @@ class StylistProfileSerializer(serializers.ModelSerializer):
 class ClientProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClientProfile
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    author_avatar = serializers.ImageField(
+        source='user.clientprofile.avatar', read_only=True)
+
+    class Meta:
+        model = Review
         fields = '__all__'
