@@ -37,6 +37,9 @@ class StylistProfile(models.Model):
     instagram = models.CharField(max_length=225, null=True, blank=True)
     facebook = models.CharField(max_length=225, null=True, blank=True)
 
+    def __str__(self):
+        return self.user.username
+
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

@@ -5,8 +5,8 @@ function MainPage() {
   return (
     <>
       <p>This is the main page.</p>
-      <Search />
-      <StylistCard />
+      {/* <Search />
+      <StylistCard /> */}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import "./App.css";
+import "./components/Styles/App.css";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import Format from "./components/PageFormat/Format";

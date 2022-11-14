@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { AiFillInstagram } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import "../Styles/StylistProfile.css";
 
 function StylistEdit({ userState, setUserState, profilePage, setProfilePage }) {
   const [state, setState] = useState(profilePage);
@@ -78,45 +79,47 @@ function StylistEdit({ userState, setUserState, profilePage, setProfilePage }) {
   };
 
   const previewHTML = (
-    <>
-      <section>
-        <div className="profile-container">
-          <img
-            className="create-profile-img"
-            src={state.avatar}
-            alt="profile picture"
-          />
-        </div>
-      </section>
-      <section>
-        <h1>
-          {state.first_name} {state.last_name}
-        </h1>
-        <div>{state.business}</div>
-        <div>{state.location}</div>
-        <div>{state.contact}</div>
-        <div>{state.email}</div>
-        <ul>
-          <li>
-            <a href={state.instagram}>
-              <AiFillInstagram />
-            </a>
-          </li>
-          <li>
-            <a href={state.facebook}>
-              <BsFacebook />
-            </a>
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>Specialties:</h2>
-        <div>{state.specialties}</div>
-        <h3>About {state.first_name}</h3>
-        <div>{state.bio}</div>
-      </section>
-      <Button type="button" onClick={() => setIsEdit(true)}></Button>
-    </>
+    <div className="profile-page-container">
+      <div className="full-profile">
+        <section className="info-section">
+          <div className="profile-container profile-page-pic">
+            <img
+              className="create-profile-img"
+              src={state.avatar}
+              alt="profile picture"
+            />
+          </div>
+          <div className="info-container">
+            <h1>
+              {state.first_name} {state.last_name}
+            </h1>
+            <div>{state.business}</div>
+            <div>{state.location}</div>
+            <div>{state.contact}</div>
+            <div>{state.email}</div>
+            <ul>
+              <li>
+                <a href={state.instagram} className="insta">
+                  <AiFillInstagram />
+                </a>
+              </li>
+              <li>
+                <a href={state.facebook} className="facebook">
+                  <BsFacebook />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <Button className="edit-button" type="button" onClick={() => setIsEdit(true)}>Edit Profile</Button>
+        </section>
+        <section className="add-info">
+          <h2 className="spec-section add-comp">Specialties</h2>
+          <div className="add-text">{state.specialties}</div>
+          <h3 className="about-section add-comp">About {state.first_name}</h3>
+          <div className="add-text">{state.bio}</div>
+        </section>
+      </div>
+    </div>
   );
 
   const editHTML = (

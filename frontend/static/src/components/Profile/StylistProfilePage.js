@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import StylistEdit from "./StylistEdit";
+import "../Styles/StylistProfile.css";
 
 function StylistProfilePage({ userState, setUserState }) {
   const [profilePage, setProfilePage] = useState();
@@ -25,7 +26,7 @@ function StylistProfilePage({ userState, setUserState }) {
   }, [userState, profilePage]);
 
   return (
-    <>
+    <div className="profile-page">
       {profilePage && (
         <StylistEdit
           userState={userState}
@@ -34,7 +35,7 @@ function StylistProfilePage({ userState, setUserState }) {
           setProfilePage={setProfilePage}
         />
       )}
-    </>
+    </div>
   );
 }
 

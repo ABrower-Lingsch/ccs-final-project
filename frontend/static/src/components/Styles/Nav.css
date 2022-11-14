@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+.nav {
+    background-color: rgb(239, 173, 93);
+    height: 4.5rem;
+}
+
+.logo {
+    color:rgb(161, 64, 47);
+    font-family: Great Vibes;
+    font-size: 45px;
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    margin: 0;
+}
+
+.subtitle {
+    color: rgb(56, 79, 88);
+}
+
+.log-button {
+    color:rgb(161, 64, 47);
+    font-size: 18px;
+}
+
+.profile-button {
+    color:rgb(161, 64, 47);
+    font-size: 18px;
+}
