@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+
+.search-area {
+    display: flex;
+    width: 60%;
+}
+
+.main-title {
+    font-family: Great Vibes;
+    font-size: 80px;
+    margin-top: 10rem;
+    color:rgb(161, 64, 47);
+}
+
+.mainpage-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content:center; */
+    height: 100vh;
+    background-color: rgb(255, 248, 238);
+}
+
+.main-button {
+    background-color:rgb(4, 79, 95);
+    border: 1px solid rgb(10, 64, 100);
+}

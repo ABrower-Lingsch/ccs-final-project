@@ -8,6 +8,7 @@ function Search() {
       <InputGroup className="mb-3">
         <Form.Control type="text" placeholder="Search..." />
       </InputGroup>
+      
     </section>
   );
 }
