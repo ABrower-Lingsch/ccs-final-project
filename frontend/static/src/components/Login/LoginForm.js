@@ -56,7 +56,7 @@ function LoginForm({ userState, setUserState }) {
   };
 
   return (
-    <div className="login-form">
+    <div className="login-form log-reg-page">
       <Form onSubmit={handleSubmit}>
         <h1 className="login-title">Login</h1>
         <Form.Group className="mb-3" controlId="username">

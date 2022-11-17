@@ -89,7 +89,7 @@ function CreateStylistProfile({ userState, setUserState }) {
   };
 
   return (
-    <>
+    <div className="profile-create">
       <Form onSubmit={handleSubmit}>
         <section>
           <h1>Create your profile</h1>
@@ -222,7 +222,7 @@ function CreateStylistProfile({ userState, setUserState }) {
           Save Profile
         </Button>
       </Form>
-    </>
+    </div>
   );
 }
 

@@ -18,6 +18,7 @@ function StylistCard({ profile }) {
             {profile.first_name} {profile.last_name}
           </Card.Title>
           <Card.Text>{profile.business}</Card.Text>
+          <Card.Text>{profile.location}</Card.Text>
           <Card.Text>{profile.specialties}</Card.Text>
         </Card.Body>
       </Card>

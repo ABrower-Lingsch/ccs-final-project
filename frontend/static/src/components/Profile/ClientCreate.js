@@ -73,7 +73,7 @@ function CreateClientProfile() {
 
 
     return (
-        <>
+        <div className="profile-create">
             <Form onSubmit={handleSubmit}>
                 <section>
                     <h1>Create your profile</h1>
@@ -95,7 +95,7 @@ function CreateClientProfile() {
                 </Form.Group>
                 <Button className="form-button" type="submit">Save Profile</Button>
             </Form>
-        </>
+        </div>
     )
 }
 

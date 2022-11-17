@@ -93,7 +93,7 @@ function RegisterForm({ userState, setUserState }) {
   };
 
   return (
-    <div className="client-register-form">
+    <div className="client-register-form log-reg-page">
       <Form onSubmit={checkEqualPass}>
         <h1 className="login-title">Register</h1>
         <Form.Group className="mb-3" controlId="usernameReg">

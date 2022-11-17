@@ -10,3 +10,12 @@
   width: 300px;
   height: 300px;
 }
+
+.profile-create {
+  background-color: rgb(255, 248, 238);
+}
+
+.log-reg-page {
+  background-color: rgb(255, 248, 238);
+  height: 100vh;
+}
