@@ -12,11 +12,16 @@ function MainPage() {
       <h1 className="main-title">HairHunter</h1>
       <section className="search-area">
         <InputGroup className="mb-3">
-          <Form.Control type="text" placeholder="Search stylists or services" />
+          <Form.Control
+            type="text"
+            placeholder="Enter your address to find stylists new you"
+          />
           <Button className="main-button">Search</Button>
         </InputGroup>
         <Dropdown>
-          <Dropdown.Toggle className="main-button" id="dropdown-basic">Distance</Dropdown.Toggle>
+          <Dropdown.Toggle className="main-button" id="dropdown-basic">
+            Distance
+          </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item>No Limit</Dropdown.Item>
             <Dropdown.Item>10 miles</Dropdown.Item>

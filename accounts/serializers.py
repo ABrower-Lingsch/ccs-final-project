@@ -47,6 +47,7 @@ class StylistProfileSerializer(serializers.ModelSerializer):
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = ClientProfile
         fields = '__all__'

@@ -1,10 +1,71 @@
+import os
+import urllib.parse
+import requests
+import json
 from operator import imod
 from rest_framework import generics
+from rest_framework.response import Response
 from .models import StylistProfile, ClientProfile, User, Review
 from .serializers import StylistProfileSerializer, ClientProfileSerializer, CustomUserDetailsSerializer, ReviewSerializer
 from .permissions import IsUserOrReadOnly
-from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
+
+
+def filter_stylist_profiles_distance(stylistprofiles, origin, distance_radius):
+
+    def get_profile_location(stylistprofile):
+        return stylistprofile.location
+
+    locations = list(map(get_profile_location, stylistprofiles))
+    string_locations = ('|').join(locations)
+    url_locations = urllib.parse.quote(string_locations)
+
+    api_key = os.environ['GOOGLE_API_KEY']
+
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={origin}&destinations={url_locations}&units=imperial&key={api_key}"
+
+    response = requests.request("GET", url, headers={}, data={})
+
+    data = json.loads(response.text)
+
+    distance_dict = data['rows'][0]['elements']
+
+    distance_str_list = []
+    for i in range(len(distance_dict)):
+        distance_str_list.append(distance_dict[i]['distance']['text'])
+
+    distance_int_list = []
+    for i in range(len(distance_str_list)):
+        distance_int_list.append(
+            float((distance_str_list[i].replace('mi', ''))))
+
+    filtered_profiles = []
+    for (index, integer) in enumerate(distance_int_list):
+        try:
+            if integer < int(distance_radius):
+                filtered_profiles.append(stylistprofiles[index])
+        except:
+            pass
+
+    return filtered_profiles
+
+
+def filter_stylist_profiles(request):
+    origin = request.GET.get('origin')
+    distance_radius = request.GET.get('distance')
+    stylistprofiles = StylistProfile.objects.filter(is_verified=True)
+
+    return filter_stylist_profiles_distance(stylistprofiles, origin, distance_radius)
+
+
+@ api_view(['GET'],)
+@ permission_classes([AllowAny],)
+def get_filtered_profiles(request):
+    profiles = filter_stylist_profiles(request)
+    results = StylistProfileSerializer(profiles, many=True).data
+
+    return Response(results)
 
 
 class UserListAPIView(generics.ListAPIView):
