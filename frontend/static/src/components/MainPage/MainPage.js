@@ -10,7 +10,7 @@ import Fuse from "fuse.js";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import Spinner from "react-bootstrap/Spinner";
 
-function MainPage({userState}) {
+function MainPage({ userState }) {
   const [stylistProfiles, setStylistProfiles] = useState(null);
   const [filteredProfiles, setFilteredProfiles] = useState(null);
   const [queryPhrase, setQueryPhrase] = useState("");
@@ -20,7 +20,12 @@ function MainPage({userState}) {
   );
 
   const defaultLocationPhrase = "Select location...";
-  const noEnteredLocation = [defaultLocationPhrase, null, undefined, ""].includes(currentLocation);
+  const noEnteredLocation = [
+    defaultLocationPhrase,
+    null,
+    undefined,
+    "",
+  ].includes(currentLocation);
 
   const handleError = (err) => {
     console.warn(err);
@@ -39,19 +44,20 @@ function MainPage({userState}) {
   useEffect(() => {
     console.count("effect");
     const getPosition = async () => {
-      window.navigator.geolocation.getCurrentPosition(
-        (position) =>
-          geocodeByLatLng({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }).then((results) => {
-            const address = results.find((result) =>
-              result.types.includes("postal_code")
-            ).formatted_address;
-            setCurrentLocation(address);
-            window.localStorage.setItem("currentLocation", JSON.stringify(address));
-          })
-       
+      window.navigator.geolocation.getCurrentPosition((position) =>
+        geocodeByLatLng({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }).then((results) => {
+          const address = results.find((result) =>
+            result.types.includes("postal_code")
+          ).formatted_address;
+          setCurrentLocation(address);
+          window.localStorage.setItem(
+            "currentLocation",
+            JSON.stringify(address)
+          );
+        })
       );
       if (!currentLocation) {
         setCurrentLocation(defaultLocationPhrase);
@@ -98,12 +104,19 @@ function MainPage({userState}) {
     setFilteredProfiles(searchAndFilter());
   }, [queryPhrase, stylistProfiles]);
 
-
   return (
     <div className="mainpage-full">
       <h1 className="main-title">HairHunter</h1>
       <section>
-        <Search/>
+        <Search
+          distance={distance}
+          setDistance={setDistance}
+          queryPhrase={queryPhrase}
+          setQueryPhrase={setQueryPhrase}
+          currentLocation={currentLocation}
+          setCurrentLocation={setCurrentLocation}
+          clearFilters={clearFilters}
+        />
       </section>
       <article className="profiles-mainbar">
         {!currentLocation ? (
@@ -112,14 +125,17 @@ function MainPage({userState}) {
           </p>
         ) : currentLocation === defaultLocationPhrase ? (
           <p className="no-data-label">
-            Enable location services or select a location from the search menu to find stylists near you!
+            Enable location services or select a location from the search menu
+            to find stylists near you!
           </p>
         ) : filteredProfiles === null ? (
           <Spinner animation="border" variant="warning" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : filteredProfiles.length === 0 ? (
-          <p className="no-data-label">No profiles match that search, please try again.</p>
+          <p className="no-data-label">
+            No profiles match that search, please try again.
+          </p>
         ) : (
           <div className="list profile-card-list">
             {filteredProfiles.map((profile) => (
