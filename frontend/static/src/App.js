@@ -118,7 +118,7 @@ function App() {
                 />
               }
             />
-            <Route index element={<MainPage />} />
+            <Route index element={<MainPage userState={userState} />} />
           </Route>
         </Routes>
       </BrowserRouter>
